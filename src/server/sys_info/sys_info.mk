@@ -1,4 +1,4 @@
-LIB	= $(MAKE_DIR)/build/server/libs/lsys_info.a
+LIB	= $(LIBS_DIR)libsys_info.a
 SRCS	= $(wildcard *.c)
 OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
@@ -8,4 +8,4 @@ $(LIB): $(OBJS)
 	@ar cr $@ $^
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $^
+	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $^

@@ -4,9 +4,10 @@
 #include <unistd.h>
 
 
+#include "error.h"
 #include "info.h"
-#include "../../error_handling/error.h"
-#include "../../networking/socket_functions/send_functions/send.h"
+#include "send.h"
+
 
 #define CWD 1
 

@@ -7,13 +7,17 @@
 #include <utmp.h>
 
 
-#include "../../../../error_handling/error.h"
-#include "../../../../networking/socket_functions/receive_functions/receive.h"
-#include "../../../../networking/socket_functions/send_functions/send.h"
+
+#include "error.h"
+#include "receive.h"
+#include "send.h"
+
 
 
 void change_directory(int sock);
 static void check_return(int sock, int ret);
+
+
 
 // #0  0x00007ffff7ab8472 in __strcpy_sse2_unaligned () from /usr/lib/libc.so.6
 // No symbol table info available.

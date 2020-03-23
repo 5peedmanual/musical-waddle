@@ -5,13 +5,16 @@
 # $* 	Nome do arquivo sem sufixo
 
 
-
 SRCS	= $(wildcard *.c)
 OBJS	= $(patsubst %c, %o, $(SRCS))
 
-$(SERVER_PROGRAM_NAME): $(OBJS) $(SERVER_LIBS)
+$(SERVER_PROGRAM_NAME): $(OBJS)
 	#$(CC) $(CFLAGS) -o $@ $< -L. $(SERVER_LIBS)
-	@$(CC) $(CFLAGS) $^ -L. $(SERVER_LIBS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(SERVER_LIBS) -o $@
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $<
+	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $<
+
+
+clean:
+	RM *.o

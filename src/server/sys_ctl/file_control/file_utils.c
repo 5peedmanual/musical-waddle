@@ -3,15 +3,15 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
 #include <fcntl.h>
 #include <unistd.h>
 
 
+
+#include "debug.h"
+#include "error.h"
 #include "file_utils.h"
-#include "../../../error_handling/debug.h"
-#include "../../../error_handling/error.h"
-#include "../../../error_handling/malloc_check.h"
+#include "malloc_check.h"
 
 
 

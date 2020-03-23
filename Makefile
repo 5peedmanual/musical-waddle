@@ -1,19 +1,3 @@
-
-#################################
-#	FROM LINUX KERNEL	#
-#################################
-#				#
-# VERSION = 0			#
-# #PATCH_LEVEL			#
-# #SUBLEVEL			#
-# # NAME =			#
-#################################
-
-# # Do not use make's built-in rules and variables
-# (this increases performance and avoids hard-to-debug behaviour)
-MAKEFLAGS += -rR
-
-
 #################################
 #	PROGRAM NAME		#
 #################################
@@ -21,106 +5,127 @@ CLIENT_PROGRAM_NAME	:= client
 SERVER_PROGRAM_NAME	:= server
 #################################
 
-#################################
-#	  COMPILER		#
-#################################
-WARNINGS 		:= -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align \
-            		-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
-            		-Wredundant-decls -Wnested-externs -Winline -Wno-long-long \
-            		-Wconversion -Wstrict-prototypes
-#WARNINGS		+= -pedantic
-CFLAGS 			:= -g -std=gnu99 $(WARNINGS)
-CC 			:= gcc
-#################################
 
 
 #################################
 #	  BUILD DIR		#
 #################################
-MAKE_DIR 		:= $(PWD)
-SOURCE 			:= src/
+MAKE_DIR		:= /home/buiop/Programming/musical-waddle/
+SOURCE_DIR 		:= src/
 
 
-BUILD_CLI_DIR 		:= $(MAKE_DIR)/build/client/
-BUILD_SER_DIR 		:= $(MAKE_DIR)/build/server/
-BUILD_ERR_DIR 		:= $(MAKE_DIR)/build/error/
-BUILD_NET_DIR 		:= $(MAKE_DIR)/build/networking/
+BUILD_DIR 		:= $(MAKE_DIR)build/
+LIBS_DIR		:= $(MAKE_DIR)build/libs/
+
+
+
 #################################
+#################################
+#	  COMPILER		#
+#################################
+# You dont know C flag extra
+EXTRA_FLAGS	:= -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align \
+            		-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
+            		-Wredundant-decls -Wnested-externs -Winline -Wno-long-long \
+            		-Wconversion -Wstrict-prototypes
+#EXTRA_FLAGS	+= -pedantic
+DEBUG_FLAG	:= -g
+
+
+# Compiler to use
+CC 			:= gcc
+# Flags for the compiler
+CFLAGS 		:= $(DEBUG_FLAG) -std=gnu99
+#CFLAGS		+= $(EXTRA_FLAGS)
+
+
+
+
+#################################
+#	 C PRE-PROCESSOR	#
+#################################
+# What flags should be passed to the C pre-processor
+# In other words, where should we look for files to include
+# This doenst include compiler specific directories
+CPPFLAGS	:= -I. \
+		-I$(INCLUDE_DIR)
+
+## CLIENT INCLUDES FOR SEARCH
+INCLUDE_DIR		:= $(MAKE_DIR)include/
+
+CLIENT_INC_SRCH_PATH 	:=
+CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)networking
+CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)error_handling
+CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)client
+
+
+SERVER_INC_SRCH_PATH	:= 
+SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)networking
+SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)error_handling
+SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)server
+
+
+#################################
+
+
+
+#################################
+#	     LINKER		#
+#################################
+# Where to look for libraries to link
+LDFLAGS			:= -L. \
+			-L$(LIBS_DIR)
+
+
+## CLIENT LDLIBS
+CLIENT_LIBS		:= -linterface -lutils -lclientnetworking -lerror
+			
+
+## SERVER LDLIBS
+SERVER_LIBS		:= -lreceive_cmds -lsys_ctl -lsys_info -lservernetworking -lerror
+
+
+
+#################################
+
+
+
 
 
 #################################
 #	COMMON .c FILES		#
 #################################
-ERROR_SRC 		:= $(SOURCE)error_handling
-NETWORKING_SRC 		:= $(SOURCE)networking
+ERROR_SRC 		:= $(SOURCE_DIR)error_handling
+NETWORKING_SRC 		:= $(SOURCE_DIR)networking
 #################################
 
 
 #################################
 #	CLIENT .c FILES		#
 #################################
-CLIENT_SRC 		:= $(SOURCE)client/
+CLIENT_SRC 		:= $(SOURCE_DIR)client/
 CLIENT_INTERFACE_SRC 	:= $(CLIENT_SRC)interface
 CLIENT_UTILS_SRC 	:= $(CLIENT_SRC)utils
 #################################
 
 
-# TODO: ADD the includes of each .c file
-## CLIENT INCLUDES FOR SEARCH
-CLIENT_INC_SRCH_PATH :=
-CLIENT_INC_SRCH_PATH += -I$(CLIENT_SRC)
-CLIENT_INC_SRCH_PATH += -I$(CLIENT_INTERFACE_SRC)
-CLIENT_INC_SRCH_PATH += -I$(CLIENT_UTILS_SRC)
-CLIENT_INC_SRCH_PATH += -I$(NETWORKING_SRC)
-
-##
-
-CLIENT_LIB_SRCH_PATH :=
-CLIENT_LIB_SRCH_PATH += -L $(BUILD_CLI_DIR)libs
-
-## CLIENT LIBS
-CLIENT_LIBS_DIR	:= $(BUILD_CLI_DIR)libs/
-
-CLIENT_LIBS 		:= $(BUILD_ERR_DIR)errorlib.a \
-			$(BUILD_NET_DIR)lclientnetworking.a \
-			$(CLIENT_LIBS_DIR)lutils.a \
-			$(CLIENT_LIBS_DIR)linterface.a 
-
-			
-
-## SERVER LIBS DIRECTORY
-SERVER_LIBS_DIR 	:=$(BUILD_SER_DIR)libs/
-
-SERVER_LIBS 		:= $(BUILD_NET_DIR)lservernetworking.a \
-			$(SERVER_LIBS_DIR)lreceive_cmds.a \
-			$(SERVER_LIBS_DIR)lsys_info.a \
-			$(SERVER_LIBS_DIR)lsys_ctl.a \
-			$(BUILD_ERR_DIR)errorlib.a 
-
-
-
-## ALL SERVER LIBS
-# for server.mk
-#SERVER_LIBS	:=	$(MAKE_DIR)$(BUILD_ERR_DIR)errorlib.a \
-			$(MAKE_DIR)$(BUILD_NET_DIR)lservernetworking.a \
-			$(SERVER_LIBS_DIR)lreceive_cmds.a \
-			$(SERVER_LIBS_DIR)lsys_ctl.a \
-			$(SERVER_LIBS_DIR)lsys_info.a
-
-
 #################################
 #	SERVER .c FILES		#
 #################################
-SERVER_SRC		:= $(SOURCE)server
-SERVER_RCV_CMDS_SRC	:= $(SOURCE)server/receive_cmds
-SERVER_SYS_CTL_SRC	:= $(SOURCE)server/sys_ctl
-SERVER_SYS_INFO_SRC	:= $(SOURCE)server/sys_info
+SERVER_SRC		:= $(SOURCE_DIR)server
+SERVER_RCV_CMDS_SRC	:= $(SOURCE_DIR)server/receive_cmds
+SERVER_SYS_CTL_SRC	:= $(SOURCE_DIR)server/sys_ctl
+SERVER_SYS_INFO_SRC	:= $(SOURCE_DIR)server/sys_info
 #################################
 
 
+
+
 export MAKE_DIR CC CFLAGS
-export CLIENT_LIBS CLIENT_PROGRAM_NAME
-export SERVER_LIBS SERVER_PROGRAM_NAME
+export MAKE_DIR BUILD_DIR INCLUDE_DIR LIBS_DIR
+export LDFLAGS 
+export CLIENT_PROGRAM_NAME CLIENT_LIBS CLIENT_INC_SRCH_PATH
+export SERVER_PROGRAM_NAME SERVER_LIBS SERVER_INC_SRCH_PATH
 
 # Link command:
 all: $(CLIENT_PROGRAM_NAME) $(SERVER_PROGRAM_NAME)
@@ -136,7 +141,7 @@ all: $(CLIENT_PROGRAM_NAME) $(SERVER_PROGRAM_NAME)
 client: 	
 	$(info compiling $(CLIENT_PROGRAM_NAME) ...)
 	@$(MAKE) -C $(ERROR_SRC) -f error.mk --no-print-directory
-	@$(MAKE) -C $(NETWORKING_SRC) -f client_networking.mk --no-print-directory
+	$(MAKE) -C $(NETWORKING_SRC) -f client_networking.mk --no-print-directory
 	@$(MAKE) -C $(CLIENT_UTILS_SRC) -f utils.mk --no-print-directory
 	@$(MAKE) -C $(CLIENT_INTERFACE_SRC) -f interface.mk --no-print-directory
 	@$(MAKE) -C $(CLIENT_SRC) -f client.mk --no-print-directory

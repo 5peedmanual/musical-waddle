@@ -2,17 +2,18 @@
 #include <stdlib.h>
 
 
-#include "input.h"
-#include "menus.h"
-#include "print_functions/menu_prints.h"
-#include "../../networking/socket_functions/receive_functions/receive.h"
-#include "../../networking/socket_functions/send_functions/send.h"
-#include "../../error_handling/error.h"
-#include "../colors.h"
 
-
-#include "menu.h"
+#include "colors.h"
+#include "error.h"
 #include "handles.h"
+#include "input.h"
+#include "menu.h"
+#include "menus.h"
+#include "menu_prints.h"
+#include "receive.h"
+#include "send.h"
+
+
 
 static void parse_menu(int sock, int answer);
 static void file_control_parse(int sock, int answer);

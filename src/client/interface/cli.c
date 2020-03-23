@@ -7,11 +7,11 @@
 
 #include "cli.h"
 #include "menu.h"
-#include "../utils/print_open.h"
-#include "../../networking/socket_functions/receive_functions/receive.h"
-#include "../../error_handling/error.h"
-#include "../../error_handling/debug.h"
-#include "../../error_handling/jmp.h"
+#include "utils.h"
+#include "receive.h"
+#include "error.h"
+#include "debug.h"
+#include "jmp.h"
 
 
 

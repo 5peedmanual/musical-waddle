@@ -1,4 +1,4 @@
-LIB	= ../../../build/server/libs/lreceive_cmds.a
+LIB	= $(LIBS_DIR)libreceive_cmds.a
 SRCS	= $(wildcard *.c)
 OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
@@ -11,4 +11,4 @@ $(LIB): $(OBJS)
 	@ar cr $@ $^
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $(SRCS)
+	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $< 

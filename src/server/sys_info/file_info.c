@@ -9,10 +9,11 @@
 #include <time.h>
 
 
-#include "../../error_handling/error.h"
-#include "../../error_handling/debug.h"
-#include "../../networking/socket_functions/send_functions/send.h"
-#include "../../networking/socket_functions/receive_functions/receive.h"
+
+#include "debug.h"
+#include "error.h"
+#include "receive.h"
+#include "send.h"
 
 
 

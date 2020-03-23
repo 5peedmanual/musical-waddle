@@ -3,14 +3,20 @@
 #include <string.h>
 #include <limits.h>
 
+
+
+#include "debug.h"
 #include "handles.h"
-#include "../../networking/socket_functions/send_functions/send.h"
-#include "../../networking/socket_functions/receive_functions/receive.h"
-#include "../../networking/send_file/send_file.h"
-#include "../../error_handling/debug.h"
 #include "input.h"
+#include "send.h"
+#include "send_file.h"
+#include "receive.h"
+
+
 
 static size_t find_EOF(char *buffer);
+
+
 
 /* create filename, rm filename, mkdir, cd */
 void handle_file(int sock)

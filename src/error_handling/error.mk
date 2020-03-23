@@ -1,13 +1,9 @@
-LIB 	= $(MAKE_DIR)/build/error/errorlib.a
+LIB 	= $(LIBS_DIR)liberror.a
 SRCS 	= $(wildcard *.c)
 OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
 
 $(LIB): $(OBJS)
-	@echo "$(SRCS)"
-	@echo "$(OBJS)"
-	# @mkdir -p ../libs
-
 	# (AR) cr output inputs
 	@ar cr $@ $^
 	@echo "    Archive    $(notdir $@)"

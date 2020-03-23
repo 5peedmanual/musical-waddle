@@ -1,10 +1,3 @@
-#
-# cmpcl = ../compile/client/
-# cmperr = ../compile/error/
-# interface = interface/
-#
-# client_libs = client.h kick_sockets.h $(interface)input_parse_funcs.h
-# input_parse_funcs_libs = $(interface)input_parse_funcs.h kick_sockets.h
 
 # $@    Nome da regra.
 # $<    Nome da primeira dependência
@@ -13,22 +6,22 @@
 # $* 	Nome do arquivo sem sufixo
 
 
+LIBS = $(CLIENT_LIBS)
+#LDFLAGS = $(patsubst %,-L%,$(dir $(LIBS))) $(patsubst lib%.a,-l%,$(notdir $(LIBS)))
+
+
 SRCS 	= $(wildcard *.c) 
 OBJS 	= $(patsubst %.c, %.o, $(SRCS))
 
 
 # client client.c LIBS (linterface lnetworking lutils) -o client
-$(CLIENT_PROGRAM_NAME): $(OBJS) $(CLIENT_LIBS)
-	$(info echo $(CLIENT_LIBS))
-	@$(CC) $($CFLAGS) $^ -L. $(CLIENT_LIBS) -o $@
+$(CLIENT_PROGRAM_NAME): $(OBJS)
+	# $(CC) -o $@ -L~/musical-waddle/build/networking client.o -Bstatic -lclientnetworking
+	$(CC) $(OBJS) $(LDFLAGS) $(CLIENT_LIBS) -o $@
 
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $?
+	#@$(CC) $(CFLAGS) -I/home/buiop/Programming/musical-waddle/include/networking -I../../include/client -c $?
+	$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c -o $@ $<
 
 
-
-# $(cmpcl)client.o: $(client_libs)
-# 	$(info compiling client.c ...)
-# 	@-cc -c -g -Wall -c client.c -o $(cmpcl)client.o
-# 	@sleep .2

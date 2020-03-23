@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
 #include "menu_prints.h"
-#include "../../colors.h"
+#include "colors.h"
+
 
 
 void print_options(void)

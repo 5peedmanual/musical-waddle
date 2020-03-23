@@ -1,4 +1,4 @@
-LIB	:= ../../build/networking/lservernetworking.a
+LIB	:= $(LIBS_DIR)libservernetworking.a
 
 DIRS	:= receive_file create_sockets \
 	socket_functions/receive_functions socket_functions/send_functions

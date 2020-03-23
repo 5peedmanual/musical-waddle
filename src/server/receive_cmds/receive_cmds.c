@@ -7,12 +7,13 @@
 #include <inttypes.h>
 
 
-#include "receive_cmds.h"
+
+#include "debug.h"
+#include "error.h"
+#include "jmp.h"
 #include "menus.h"
-#include "../../networking/socket_functions/receive_functions/receive.h"
-#include "../../error_handling/debug.h"
-#include "../../error_handling/error.h"
-#include "../../error_handling/jmp.h"
+#include "receive.h"
+#include "receive_cmds.h"
 
 
 

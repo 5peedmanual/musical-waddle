@@ -11,7 +11,7 @@
 #include "../socket_functions/send_functions/send.h"
 #include "../../error_handling/error.h"
 #include "../../error_handling/debug.h"
-#include "../../client/utils/print_open.h"
+#include "../../client/utils/utils.h"
 
 
 static int check_send_file_size(int sock, char *file);

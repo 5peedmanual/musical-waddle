@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <fcntl.h>
 #include <unistd.h>
 
 
-#include "../file_utils.h"
-#include "../../../../networking/socket_functions/receive_functions/receive.h"
-#include "../../../../networking/socket_functions/send_functions/send.h"
-#include "../../../../error_handling/error.h"
-#include "../../../../error_handling/debug.h"
+
+#include "debug.h"
+#include "error.h"
+#include "file_utils.h"
+#include "receive.h"
+#include "send.h"
+
 
 
 void cat_file(int sock);

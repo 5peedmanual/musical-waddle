@@ -8,12 +8,17 @@
 #include <limits.h>
 
 
-#include "../../../../../error_handling/error.h"
-#include "../../../../../networking/socket_functions/receive_functions/receive.h"
-#include "../../../../../networking/socket_functions/send_functions/send.h"
+
 #include "enumerate.h"
+#include "error.h"
+#include "receive.h"
+#include "send.h"
+
+
 
 void list_directory_contents(int sock, ssize_t dir);
+
+
 
 #define DEBUG_LS
 #define CURRENT_DIR 44

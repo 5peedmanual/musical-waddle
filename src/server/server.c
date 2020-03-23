@@ -7,14 +7,16 @@
 #include <inttypes.h>
 #include <utmp.h>
 
-#include "server.h"
-#include "receive_cmds/receive_cmds.h"
-#include "../error_handling/error.h"
-#include "../error_handling/debug.h"
-#include "../error_handling/jmp.h"
-#include "../networking/create_sockets/server_sock.h"
-#include "../networking/socket_functions/send_functions/send.h"
-#include "sys_info/info.h"
+
+
+#include "debug.h"
+#include "error.h"
+#include "info.h"
+#include "jmp.h"
+#include "send.h"
+#include "server_sock.h"
+#include "receive_cmds.h"
+
 
 
 int main(void) {

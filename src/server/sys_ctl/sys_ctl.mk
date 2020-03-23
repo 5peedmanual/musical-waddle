@@ -1,5 +1,4 @@
-LIB		:= $(MAKE_DIR)/build/server/libs/lsys_ctl.a
-
+LIB		:= $(LIBS_DIR)libsys_ctl.a
 
 DIRS	:= file_control
 
@@ -20,4 +19,4 @@ $(LIB): $(OBJS)
 	@ar cr $@ $(wildcard *.o)
 
 $(OBJS): $(ALL_FILES)
-	@$(CC) $(CFLAGS) -c $?
+	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $?

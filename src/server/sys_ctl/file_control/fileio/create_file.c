@@ -6,10 +6,12 @@
 #include <limits.h>
 
 
-#include "../../../../error_handling/error.h"
-#include "../../../../networking/socket_functions/receive_functions/receive.h"
-#include "../../../../networking/socket_functions/send_functions/send.h"
-#include "../file_utils.h"
+
+#include "error.h"
+#include "file_utils.h"
+#include "receive.h"
+#include "send.h"
+
 
 
 void create_file(int sock);

@@ -4,14 +4,17 @@
 #include <sys/types.h>
 
 
+
+#include "colors.h"
+#include "debug.h"
+#include "error.h"
 #include "input.h"
 #include "menus.h"
-#include "../colors.h"
-#include "../../error_handling/error.h"
-#include "../../error_handling/debug.h"
+
 
 
 static void remove_new_line(char *source);
+
 
 
 // this function check if a value from cmd input is within range of menus

@@ -1,4 +1,4 @@
-LIB	:= ../../build/networking/lclientnetworking.a
+LIB	:= $(LIBS_DIR)libclientnetworking.a
 
 DIRS	:= create_sockets send_file \
 	socket_functions/receive_functions socket_functions/send_functions
@@ -17,5 +17,5 @@ $(LIB): $(OBJS)
 	@ar cr $@ send.o receive.o client_sock.o send_file.o
 
 $(OBJS): $(SRCS) $(HDRS)
-	@$(CC) $(CFLAGS) -c $(SRCS)
+	@$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c $(SRCS)
 

@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+
+#include "debug.h"
 #include "enumerate.h"
-#include "../../../../../error_handling/debug.h"
+
+
 
 static void fill_null(struct wlink *pointer);
 static void fill_link(struct wlink *pointer,  char sc, char *w_buf);
@@ -12,27 +17,10 @@ static void swap(struct wlink *wl);
 static void print_link(char *buffer, struct wlink *pointer);
 
 
-// static struct wlink saved;
-// void main(void)
-// {
-// 	char array[] = {
-// 			"LICENSE\n"
-// 			"compile.sh\n"
-// 			"pclient\n"
-// 			".\n"
-// 			"..\n"
-// 			"Makefile\n"
-// 			"err_handling\n"
-// 			".git\n"
-// 			"\0"
-// 	};
-// 	loop(array, 1024);
-//
-// }
 
-// this function will loop each letter of the array filling the list
-// array_list with each iteration
-// when it reaches the null character it will fill the list with null
+/* this function will loop each letter of the array filling the list
+ * array_list with each iteration
+ * when it reaches the null character it will fill the list with null */
 void loop(char *buffer, unsigned int size)
 {
 	int letter_pos, w_start, len, arr_count;
@@ -82,8 +70,8 @@ static void fill_link(struct wlink *pointer,  char sc, char *w_buf) // fill the 
 
 
 
-// this function will sort the array_list
-// uses ascii values of the first character only to sort
+/* this function will sort the array_list
+ * uses ascii values of the first character only to sort */
 static void organize(struct wlink *st)
 {
 	int size = length();

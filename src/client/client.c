@@ -3,8 +3,8 @@
 #include <string.h>
 
 
-#include "../networking/create_sockets/client_sock.h"
-#include "interface/cli.h"
+#include "client_sock.h"
+#include "cli.h"
 
 
 

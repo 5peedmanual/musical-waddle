@@ -1,15 +1,12 @@
-LIB 	= $(MAKE_DIR)/build/client/libs/linterface.a
+LIB 	= /home/buiop/Programming/musical-waddle/build/libs/libinterface.a 
 
 DIRS 	= print_functions
 
 SRCS 	= $(shell find $(DIRS) -type f -name "*.c") \
 	$(wildcard *.c)
 
-
-$(info echo $(SRCS))
 #OBJS 	= $(filter-out print_functions/menu_prints.o, patsubst %.c, %.o, $(SRCS)) 
 OBJS	= $(notdir $(patsubst %.c, %.o, $(SRCS)))
-$(info echo $(OBJS))
 
 
 
@@ -24,6 +21,6 @@ $(LIB): $(OBJS)
 	@ar cr $@ $^
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $?
+	@$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c $?
 
 
