@@ -16,42 +16,42 @@
 
 
 
-// TODO: This function is repeated in the client
-int get_size_of_file(char *path)
+
+
+int get_file_size(char *path)
 {
 	int size;
-        // FILE *file_ptr = NULL;
-	// TODO: Make a function
-        // if ((file_ptr = fopen(path, "r")) == NULL) {
-        //         error(NONFTL_SYS, "[!!][DEBUG][ERROR][get_file_size] error opening file");
-        //         return -1;
-        // }
 	FILE *file_ptr = fopen_file(path, "r");
+
         fseek(file_ptr, 0L, SEEK_END);
+
         size = ftell(file_ptr);
+
         fclose(file_ptr);
+
         printf("%d\n", size);
 	return size;
 }
 
 
 
-// This function opens a file and returns a FILE type pointer
-        //      ┌─────────────┬───────────────────────────────┐
-        //      │fopen() mode │ open() flags                  │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     r       │ O_RDONLY                      │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     w       │ O_WRONLY | O_CREAT | O_TRUNC  │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     a       │ O_WRONLY | O_CREAT | O_APPEND │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     r+      │ O_RDWR                        │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     w+      │ O_RDWR | O_CREAT | O_TRUNC    │
-        //      ├─────────────┼───────────────────────────────┤
-        //      │     a+      │ O_RDWR | O_CREAT | O_APPEND   │
-        //      └─────────────┴───────────────────────────────┘
+/* This function opens a file and returns a FILE type pointer
+//      ┌─────────────┬───────────────────────────────┐
+//      │fopen() mode │ open() flags                  │
+//      ├─────────────┼───────────────────────────────┤
+//      │     r       │ O_RDONLY                      │
+//      ├─────────────┼───────────────────────────────┤
+//      │     w       │ O_WRONLY | O_CREAT | O_TRUNC  │
+//      ├─────────────┼───────────────────────────────┤
+//      │     a       │ O_WRONLY | O_CREAT | O_APPEND │
+//      ├─────────────┼───────────────────────────────┤
+//      │     r+      │ O_RDWR                        │
+//      ├─────────────┼───────────────────────────────┤
+//      │     w+      │ O_RDWR | O_CREAT | O_TRUNC    │
+//      ├─────────────┼───────────────────────────────┤
+//      │     a+      │ O_RDWR | O_CREAT | O_APPEND   │
+//      └─────────────┴───────────────────────────────┘
+*/
 FILE *fopen_file(char *path, const char *fmode)
 {
         FILE *file_ptr = NULL; // File type pointer
@@ -62,6 +62,7 @@ FILE *fopen_file(char *path, const char *fmode)
 
 	return file_ptr;
 }
+
 
 
 void write_to_file(char *dirpath, char *content)
@@ -142,4 +143,14 @@ int check_file_access(char *path, int mode)
                 debug("access OK");
                 return 0;
 	}
+}
+
+
+
+void print_file(FILE *file_ptr)
+{
+        char read_string[100];
+        // char *fgets(char *s, int size, FILE *stream);
+        while(fgets(read_string, sizeof(read_string), file_ptr) != NULL)
+                printf("%s", read_string);
 }

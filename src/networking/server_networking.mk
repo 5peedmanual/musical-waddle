@@ -9,7 +9,6 @@ OBJS	:= $(patsubst %.c, %.o, $(SRCS))
 
 ALL_FILES	:= $(SRCS) $(HDRS)
 
-$(info echo $(ALL_FILES))
 
 all: $(LIB)
 
@@ -19,4 +18,4 @@ $(LIB): $(OBJS)
 
 
 $(OBJS): $(SRCS) $(HDRS)
-	@$(CC) $(CFLAGS) -c $(SRCS)
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $(SRCS)

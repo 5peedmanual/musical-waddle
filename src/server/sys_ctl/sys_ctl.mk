@@ -1,12 +1,13 @@
 LIB		:= $(LIBS_DIR)libsys_ctl.a
 
-DIRS	:= file_control
+DIRS		:= file_control/
 
-SRCS	:= $(shell find $(DIRS) -type f -name "*.c")
-HDRS	:= $(shell find $(DIRS) -type f -name "*.h")
-OBJS	:= $(patsubst %.c, %.o, $(SRCS))
+SRCS		:= $(shell find $(DIRS) -type f -name "*.c")
+OBJS		:= $(patsubst %.c, %.o, $(notdir $(SRCS)))
 
-ALL_FILES	:= $(SRCS) $(HDRS)
+
+$(info echo $(OBJS))
+ALL_FILES	:= $(SRCS) 
 
 all: $(LIB)
 
@@ -14,9 +15,9 @@ all: $(LIB)
 ## ar cr libname.a obj1.o obj2.o
 ## c for creating the archive, r for inserting the files into the archive
 ##
-
 $(LIB): $(OBJS)
-	@ar cr $@ $(wildcard *.o)
+	$(info compiling $(LIB))
+	ar cr $@ $^
 
 $(OBJS): $(ALL_FILES)
-	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $?
+	$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $^

@@ -4,11 +4,13 @@
 #include <inttypes.h>
 
 
+
+#include "debug.h"
+#include "error.h"
+#include "receive.h"
 #include "send.h"
-#include "../../settings_send.h"
-#include "../receive_functions/receive.h"
-#include "../../../error_handling/debug.h"
-#include "../../../error_handling/error.h"
+#include "settings_send.h"
+
 
 
 #define DEFAULT_SIZE_MSG 1024
@@ -27,12 +29,14 @@ void send_number(int sock, ssize_t num)
 }
 
 
+
 void send_char(int sock, char ch)
 {
         debug("sending %c", ch)
         ssize_t ret = send(sock, &ch, sizeof(char), 0);
         check_ret(ret);
 }
+
 
 
 void send_nstr(int sock, char *str, ssize_t size)
@@ -69,6 +73,8 @@ void send_message(int sock, const char *message)
 }
 
 
+/* send more bytes if it keeps receiving 'y' */
+/* used in cat */
 void send_with_confirm(int sock, char *buffer, ssize_t bsize)
 {
         Settings_send s;
@@ -106,6 +112,7 @@ static void check_ret(ssize_t ret)
 
         }
 }
+
 
 
 static ssize_t while_send(int sock, Settings_send sp)

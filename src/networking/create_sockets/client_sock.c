@@ -5,12 +5,16 @@
 #include <arpa/inet.h> // inet_addr
 
 
+
 #include "client_sock.h"
-#include "../../error_handling/debug.h"
-#include "../../error_handling/error.h"
+#include "debug.h"
+#include "error.h"
+
 
 
 #define PORT 9998
+
+
 
 int create_client_fd(void)
 {

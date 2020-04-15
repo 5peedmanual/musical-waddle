@@ -6,12 +6,14 @@
 
 
 #include "cli.h"
-#include "menu.h"
-#include "utils.h"
-#include "receive.h"
-#include "error.h"
 #include "debug.h"
+#include "error.h"
 #include "jmp.h"
+#include "menu.h"
+#include "receive.h"
+#include "utils.h"
+
+
 
 
 
@@ -40,7 +42,7 @@ static void check_begin(void)
 {
 	static int beginning = 0;
         if (!beginning) {
-                open_file("textfiles/opening.txt"); // Print ascii
+                fopen_file("textfiles/opening.txt", "r"); // Print ascii
                 beginning = 1;
         }
 }

@@ -9,11 +9,10 @@ SRCS	= $(wildcard *.c)
 OBJS	= $(patsubst %c, %o, $(SRCS))
 
 $(SERVER_PROGRAM_NAME): $(OBJS)
-	#$(CC) $(CFLAGS) -o $@ $< -L. $(SERVER_LIBS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(SERVER_LIBS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(SERVER_LIBS) -o $@
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $<
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $<
 
 
 clean:

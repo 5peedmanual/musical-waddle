@@ -3,10 +3,11 @@
 #include <string.h>
 
 
+
+#include "debug.h"
+#include "error.h"
 #include "receive.h"
-#include "../../settings_receive.h"
-#include "../../../error_handling/debug.h"
-#include "../../../error_handling/error.h"
+#include "settings_receive.h"
 
 
 
@@ -26,6 +27,7 @@ ssize_t *receive_number(int sock)
 }
 
 
+
 char receive_char(int sock)
 {
         char c;
@@ -36,10 +38,10 @@ char receive_char(int sock)
 }
 
 
+
 /* Over-thinking, over-analyzing separates the body from the mind. */ 
 /* We'll ride the spiral to the end */
 /* And may just go where no one's been. */
-
 void receive_nstr(int sock, char *buffer)
 {
 
@@ -59,6 +61,7 @@ void receive_nstr(int sock, char *buffer)
 }
 
 
+
 static void check_ret(ssize_t ret)
 {
 	if (ret == -1) {
@@ -69,6 +72,7 @@ static void check_ret(ssize_t ret)
 
 	}
 }
+
 
 
 static void while_receive(int sock, Settings_receive sp)

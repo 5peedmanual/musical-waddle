@@ -3,7 +3,7 @@
 #include <sys/types.h>
 
 void recv_cmd(int sock);
-void create_file(int sock);
+extern void create_file(int sock);
 void create_directory(int sock);
 void change_directory(int sock);
 void list_directory_contents(int sock, ssize_t dir);

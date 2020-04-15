@@ -5,13 +5,15 @@
 #include <sys/socket.h>
 
 
+
+#include "debug.h"
+#include "error.h"
+#include "receive.h"
+#include "send.h"
 #include "send_file.h"
-#include "../settings_send.h"
-#include "../socket_functions/receive_functions/receive.h"
-#include "../socket_functions/send_functions/send.h"
-#include "../../error_handling/error.h"
-#include "../../error_handling/debug.h"
-#include "../../client/utils/utils.h"
+#include "settings_send.h"
+#include "utils.h"
+
 
 
 static int check_send_file_size(int sock, char *file);
@@ -31,7 +33,8 @@ void send_file(int sock, char *file)
 }
 
 
-// check the size of the file and sends it to the server
+
+/* check the size of the file and sends it to the server */
 static int check_send_file_size(int sock, char *file)
 {
 	int size;
@@ -48,7 +51,8 @@ static int check_send_file_size(int sock, char *file)
 }
 
 
-// try to open the file and send the name of the file to the server
+
+/* try to open the file and send the name of the file to the server */
 static FILE *check_send_file(int sock, char *file)
 {
 	FILE *file_ptr = NULL;
@@ -61,7 +65,8 @@ static FILE *check_send_file(int sock, char *file)
 }
 
 
-// sends the file 
+
+/* sends the file */
 static void sending_file(int sock, FILE *file_ptr, ssize_t size_of_file)
 {
         Settings_send s;

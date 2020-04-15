@@ -8,6 +8,7 @@ $(LIB): $(OBJS)
 	@ar cr $@ $^
 	@echo "    Archive    $(notdir $@)"
 
+
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) -c $^
-	@echo "    CC        $(OBJS)"
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $^
+

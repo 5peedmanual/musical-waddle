@@ -16,7 +16,7 @@ SOURCE_DIR 		:= src/
 
 BUILD_DIR 		:= $(MAKE_DIR)build/
 LIBS_DIR		:= $(MAKE_DIR)build/libs/
-
+OBJS_DIR		:= $(BUILD_DIR)objs/
 
 
 #################################
@@ -53,16 +53,13 @@ CPPFLAGS	:= -I. \
 ## CLIENT INCLUDES FOR SEARCH
 INCLUDE_DIR		:= $(MAKE_DIR)include/
 
-CLIENT_INC_SRCH_PATH 	:=
-CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)networking
-CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)error_handling
-CLIENT_INC_SRCH_PATH 	+= -I$(INCLUDE_DIR)client
-
-
-SERVER_INC_SRCH_PATH	:= 
-SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)networking
-SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)error_handling
-SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)server
+INCLUDE_SRCH_PATH 	:=
+INCLUDE_SRCH_PATH	+= -I$(INCLUDE_DIR)
+INCLUDE_SRCH_PATH 	+= -I$(INCLUDE_DIR)client
+INCLUDE_SRCH_PATH 	+= -I$(INCLUDE_DIR)server
+INCLUDE_SRCH_PATH 	+= -I$(INCLUDE_DIR)error_handling
+INCLUDE_SRCH_PATH 	+= -I$(INCLUDE_DIR)networking
+INCLUDE_SRCH_PATH	+= -I$(INCLUDE_DIR)utils
 
 
 #################################
@@ -73,6 +70,8 @@ SERVER_INC_SRCH_PATH	+= -I$(INCLUDE_DIR)server
 #	     LINKER		#
 #################################
 # Where to look for libraries to link
+
+
 LDFLAGS			:= -L. \
 			-L$(LIBS_DIR)
 
@@ -82,7 +81,7 @@ CLIENT_LIBS		:= -linterface -lutils -lclientnetworking -lerror
 			
 
 ## SERVER LDLIBS
-SERVER_LIBS		:= -lreceive_cmds -lsys_ctl -lsys_info -lservernetworking -lerror
+SERVER_LIBS		:= -lreceive_cmds -lsys_ctl -lsys_info -lservernetworking -lutils -lerror
 
 
 
@@ -97,6 +96,7 @@ SERVER_LIBS		:= -lreceive_cmds -lsys_ctl -lsys_info -lservernetworking -lerror
 #################################
 ERROR_SRC 		:= $(SOURCE_DIR)error_handling
 NETWORKING_SRC 		:= $(SOURCE_DIR)networking
+UTILS_SRC		:= $(SOURCE_DIR)utils
 #################################
 
 
@@ -105,14 +105,13 @@ NETWORKING_SRC 		:= $(SOURCE_DIR)networking
 #################################
 CLIENT_SRC 		:= $(SOURCE_DIR)client/
 CLIENT_INTERFACE_SRC 	:= $(CLIENT_SRC)interface
-CLIENT_UTILS_SRC 	:= $(CLIENT_SRC)utils
 #################################
 
 
 #################################
 #	SERVER .c FILES		#
 #################################
-SERVER_SRC		:= $(SOURCE_DIR)server
+SERVER_SRC		:= $(SOURCE_DIR)server/
 SERVER_RCV_CMDS_SRC	:= $(SOURCE_DIR)server/receive_cmds
 SERVER_SYS_CTL_SRC	:= $(SOURCE_DIR)server/sys_ctl
 SERVER_SYS_INFO_SRC	:= $(SOURCE_DIR)server/sys_info
@@ -120,13 +119,16 @@ SERVER_SYS_INFO_SRC	:= $(SOURCE_DIR)server/sys_info
 
 
 
-
 export MAKE_DIR CC CFLAGS
-export MAKE_DIR BUILD_DIR INCLUDE_DIR LIBS_DIR
-export LDFLAGS 
-export CLIENT_PROGRAM_NAME CLIENT_LIBS CLIENT_INC_SRCH_PATH
-export SERVER_PROGRAM_NAME SERVER_LIBS SERVER_INC_SRCH_PATH
+export MAKE_DIR BUILD_DIR INCLUDE_DIR LIBS_DIR OBJS_DIR
+export LDFLAGS INCLUDE_SRCH_PATH 
+export CLIENT_PROGRAM_NAME CLIENT_LIBS 
+export SERVER_PROGRAM_NAME SERVER_LIBS 
 
+
+
+#
+#
 # Link command:
 all: $(CLIENT_PROGRAM_NAME) $(SERVER_PROGRAM_NAME)
 
@@ -134,36 +136,35 @@ all: $(CLIENT_PROGRAM_NAME) $(SERVER_PROGRAM_NAME)
 #################################
 #	    TARGETS		#
 #################################
+
+
 # make -C ./dir1
 # make -C ./dir2
 
 # This actually spawns/forks a new child process for every make call.
 client: 	
 	$(info compiling $(CLIENT_PROGRAM_NAME) ...)
-	@$(MAKE) -C $(ERROR_SRC) -f error.mk --no-print-directory
-	$(MAKE) -C $(NETWORKING_SRC) -f client_networking.mk --no-print-directory
-	@$(MAKE) -C $(CLIENT_UTILS_SRC) -f utils.mk --no-print-directory
-	@$(MAKE) -C $(CLIENT_INTERFACE_SRC) -f interface.mk --no-print-directory
-	@$(MAKE) -C $(CLIENT_SRC) -f client.mk --no-print-directory
+	@$(MAKE) -C $(ERROR_SRC) -f error.mk			--no-print-directory
+	@$(MAKE) -C $(NETWORKING_SRC) -f client_networking.mk 	--no-print-directory
+	@$(MAKE) -C $(UTILS_SRC) -f utils.mk			--no-print-directory
+	@$(MAKE) -C $(CLIENT_INTERFACE_SRC) -f interface.mk 	--no-print-directory
+	@$(MAKE) -C $(CLIENT_SRC) -f client.mk 			--no-print-directory
 
 
 server:
 	$(info compiling $(SERVER_PROGRAM_NAME) ...)
-	@$(MAKE) -C $(ERROR_SRC) -f error.mk --no-print-directory
-	@$(MAKE) -C $(NETWORKING_SRC) -f server_networking.mk --no-print-directory
-	@$(MAKE) -C $(SERVER_RCV_CMDS_SRC) -f receive_cmds.mk --no-print-directory
-	@$(MAKE) -C $(SERVER_SYS_CTL_SRC) -f sys_ctl.mk --no-print-directory
-	@$(MAKE) -C $(SERVER_SYS_INFO_SRC) -f sys_info.mk --no-print-directory
-	@$(MAKE) -C $(SERVER_SRC) -f server.mk --no-print-directory
+	@$(MAKE) -C $(ERROR_SRC) -f error.mk			--no-print-directory
+	@$(MAKE) -C $(NETWORKING_SRC) -f server_networking.mk	--no-print-directory
+	@$(MAKE) -C $(UTILS_SRC) -f utils.mk			--no-print-directory
+	@$(MAKE) -C $(SERVER_RCV_CMDS_SRC) -f receive_cmds.mk 	--no-print-directory
+	@$(MAKE) -C $(SERVER_SYS_CTL_SRC) -f sys_ctl.mk 	--no-print-directory
+	@$(MAKE) -C $(SERVER_SYS_INFO_SRC) -f sys_info.mk 	--no-print-directory
+	@$(MAKE) -C $(SERVER_SRC) -f server.mk 			--no-print-directory
+
+
 ################################
 
 
-# creates a build/ directory for the binaries
-create:
-	mkdir -p build/client/libs
-	mkdir -p build/server/libs
-	mkdir -p build/error
-	mkdir -p build/networking
 
 
 # A phony target is one that is not really the name of a file;
@@ -172,12 +173,21 @@ create:
 # conflict with a file of the same name, and to improve performance.
 # removes the executables and removes build/ directory
 
-.PHONY: clean cleandir cleanelfs
+.PHONY: create clean cleandir cleanelfs
 
+# creates a build/ directory for the binaries
+create:
+	mkdir -p build/libs
+	mkdir -p build/objs
+
+
+printobjs:
+	$(info echo $(OBJS))
+
+OBJS = $(shell find ./ -name "*.o")
 clean:
 	-rm -r build/
-
-
+	-rm $(OBJS)
 
 
 cleanelfs:

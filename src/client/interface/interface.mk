@@ -1,14 +1,10 @@
-LIB 	= /home/buiop/Programming/musical-waddle/build/libs/libinterface.a 
-
-DIRS 	= print_functions
-
-SRCS 	= $(shell find $(DIRS) -type f -name "*.c") \
-	$(wildcard *.c)
-
+LIB 	= $(LIBS_DIR)libinterface.a 
+#SRCS 	= $(shell find $(DIRS) -type f -name "*.c") \
 #OBJS 	= $(filter-out print_functions/menu_prints.o, patsubst %.c, %.o, $(SRCS)) 
-OBJS	= $(notdir $(patsubst %.c, %.o, $(SRCS)))
+SRCS	= $(wildcard *.c)
+OBJS	= $(patsubst %.c, %.o, $(SRCS))
 
-
+$(info echo $(OBJS))
 
 ## ar generates an library of object files like so:
 ## ar cr libname.a obj1.o obj2.o
@@ -21,6 +17,6 @@ $(LIB): $(OBJS)
 	@ar cr $@ $^
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c $?
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $?
 
 

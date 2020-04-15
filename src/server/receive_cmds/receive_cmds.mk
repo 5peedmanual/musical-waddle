@@ -8,7 +8,8 @@ OBJS	= $(patsubst %.c, %.o, $(SRCS))
 ##
 
 $(LIB): $(OBJS)
-	@ar cr $@ $^
+	$(info compiling $(LIB))
+	ar cr $@ $(OBJS)
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $< 
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $?

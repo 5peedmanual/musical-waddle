@@ -5,12 +5,13 @@
 #include <sys/socket.h>
 
 
+
+#include "error.h"
+#include "file_utils.h"
+#include "receive.h"
 #include "receive_file.h"
-#include "../../server/sys_ctl/file_control/file_utils.h"
-#include "../../error_handling/error.h"
-#include "../settings_receive.h"
-#include "../socket_functions/send_functions/send.h"
-#include "../socket_functions/receive_functions/receive.h"
+#include "send.h"
+#include "settings_receive.h"
 
 
 

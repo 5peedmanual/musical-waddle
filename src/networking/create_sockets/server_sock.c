@@ -7,12 +7,16 @@
 #include <inttypes.h>
 
 
+
+#include "debug.h"
+#include "error.h"
 #include "server_sock.h"
-#include "../../error_handling/debug.h"
-#include "../../error_handling/error.h"
+
+
 
 #define PORT 9998
 #define SERVER
+
 
 
 int create_server_fd(void)

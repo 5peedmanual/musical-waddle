@@ -1,4 +1,3 @@
-
 # $@    Nome da regra.
 # $<    Nome da primeira dependência
 # $^ 	Lista de dependências
@@ -6,22 +5,20 @@
 # $* 	Nome do arquivo sem sufixo
 
 
+
 LIBS = $(CLIENT_LIBS)
 #LDFLAGS = $(patsubst %,-L%,$(dir $(LIBS))) $(patsubst lib%.a,-l%,$(notdir $(LIBS)))
-
-
 SRCS 	= $(wildcard *.c) 
 OBJS 	= $(patsubst %.c, %.o, $(SRCS))
 
 
+
 # client client.c LIBS (linterface lnetworking lutils) -o client
 $(CLIENT_PROGRAM_NAME): $(OBJS)
-	# $(CC) -o $@ -L~/musical-waddle/build/networking client.o -Bstatic -lclientnetworking
 	$(CC) $(OBJS) $(LDFLAGS) $(CLIENT_LIBS) -o $@
 
 
 $(OBJS): $(SRCS)
-	#@$(CC) $(CFLAGS) -I/home/buiop/Programming/musical-waddle/include/networking -I../../include/client -c $?
-	$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c -o $@ $<
 
 

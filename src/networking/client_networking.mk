@@ -5,7 +5,6 @@ DIRS	:= create_sockets send_file \
 
 
 SRCS	:= $(filter-out create_sockets/server_sock.c, $(shell find $(DIRS) -type f -name "*.c"))
-$(info echo $(SRCS))
 HDRS	:= $(shell find $(DIRS) -type f -name "*.h")
 OBJS	:= $(patsubst %.c, %.o, $(SRCS))
 
@@ -17,5 +16,5 @@ $(LIB): $(OBJS)
 	@ar cr $@ send.o receive.o client_sock.o send_file.o
 
 $(OBJS): $(SRCS) $(HDRS)
-	@$(CC) $(CFLAGS) $(CLIENT_INC_SRCH_PATH) -c $(SRCS)
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $(SRCS)
 

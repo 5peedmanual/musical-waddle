@@ -17,11 +17,17 @@
 
 
 
+static void parse_menu(int sock, ssize_t menu);
+static void parse_file_control(int sock);
+static void parse_uploads_downloads(int sock);
+
+
+
 void recv_cmd(int sock)
 {
 	ssize_t menu;
-	ssize_t action;
-	ssize_t dir_choice;
+	
+
 
 	debug("waiting for menu option...");
 
@@ -32,14 +38,39 @@ void recv_cmd(int sock)
 		exit(-1);
 	}
 
+	parse_menu(sock, menu);
+}
 
-	if (menu == FILE_CONTROL) { // 1 - FILE CONTROL
 
-		debug("waiting for action...");
-		action = (size_t ) receive_number(sock);
-		debug("action : %ld", action);
+static void parse_menu(int sock, ssize_t menu)
+{
+	switch (menu) {
+		case FILE_CONTROL :
+			parse_file_control(sock);
+                        break;
 
-		switch (action) {
+		case UPLOADS_DOWNLOADS :
+			parse_uploads_downloads(sock);
+                        break;
+		
+		case QUIT :
+			exit(0);
+	}
+	
+}
+
+
+
+static void parse_file_control(int sock)
+{
+	ssize_t action;
+	ssize_t dir_choice;
+
+	debug("waiting for action...");
+	action = (size_t ) receive_number(sock);
+	debug("action : %ld", action);
+
+	switch (action) {
 
 			case CREATE_FILE :
 				create_file(sock);
@@ -67,32 +98,28 @@ void recv_cmd(int sock)
 				break;
 
 		}
-	} else if (menu == UPLOADS_DOWNLOADS) { // 2 - UPLOADS_DOWNLOADS
-
-		debug("UPLOADS DOWNLOADS")
-		debug("wainting for action...")
-
-		action = (size_t) receive_number(sock);
-		debug("action : %ld", action)
-
-		switch (action) {
-
-			case UPLOAD_FILE :
-				receive_file(sock);
-				break;
-			case DOWNLOAD_FILE :
-				// download_file(sock);
-				break;
-			case BACK_3 :
-				break;
-
-		}
-
-	} else if (menu == QUIT) {
-		/* close stuff */
-		exit(0);
-	}
-
 }
 
 
+
+static void parse_uploads_downloads(int sock)
+{
+	ssize_t action;
+	
+	debug("waiting for action...");
+	action = (size_t) receive_number(sock);
+	debug("action : %ld", action)
+
+	switch (action) {
+
+		case UPLOAD_FILE :
+			receive_file(sock);
+			break;
+		case DOWNLOAD_FILE :
+			// download_file(sock);
+			break;
+		case BACK_3 :
+			break;
+
+	}
+}

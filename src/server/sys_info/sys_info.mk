@@ -5,7 +5,8 @@ OBJS	= $(patsubst %.c, %.o, $(SRCS))
 # Swim to the Moon
 
 $(LIB): $(OBJS)
-	@ar cr $@ $^
+	$(info compiling $(LIB))
+	ar cr $@ $^
 
 $(OBJS): $(SRCS)
-	@$(CC) $(CFLAGS) $(SERVER_INC_SRCH_PATH) -c $^
+	@$(CC) $(CFLAGS) $(INCLUDE_SRCH_PATH) -c $^
